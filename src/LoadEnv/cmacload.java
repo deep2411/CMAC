@@ -89,11 +89,12 @@ public class cmacload {
 		List<String> WattsOrderList = new ArrayList<>();
 		
 		System.out.println("Number of Rows: "+noOfRows);
+		
 			for(int i=0;i<noOfRows;i++)
 			{
 				driver.navigate().refresh();
 				Thread.sleep(4000);
-				aa: for(int j=0;j<=50;j++)  // second statement of i for
+				 for(int j=0;j<=50;j++)  // second statement of i for
 					if(sheet1.getRow(i).getCell(j)!=null) // only one statement of j loop i.e. if else statement
 					{
 						WattsOrderList.add(j,sheet1.getRow(i).getCell(j).getStringCellValue());
@@ -137,7 +138,7 @@ public class cmacload {
 							Actions actions = new Actions(driver);
 							actions.moveToElement(element).click().build().perform();
 							System.out.println("Clicked on Issue materials.");
-							Thread.sleep(2000);
+							Thread.sleep(5000);
 					    	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[@id='$PpyWorkPage$pBoMDetails$l1']//td[3]//span"))); //waiting for the first PartNo to load up on the page after clicking on Issue MAterials
 							System.out.println("FOUND the first PartNo to load up on the page after clicking on Issue Materials");
 							
@@ -163,7 +164,7 @@ public class cmacload {
 								wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='IssuedQuantity"+i1+"']")));
 								driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).clear();
 								driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).sendKeys("1"); // or use this xpath //tr[@id='$PpyWorkPage$pBoMDetails$l"+i+"']//td[12]//input
-								Thread.sleep(2000);
+								Thread.sleep(3000);
 								/*wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='fadeOut']")));
 								assertEquals(driver.findElement(By.xpath("//input[@id='fadeOut']")), "The issue transaction was successful");*/
 							}
@@ -181,11 +182,13 @@ public class cmacload {
 							catch (JavascriptException e) 
 							{
 								System.out.println("EXCEPTION OCCURED! ISSUING of Watts Order "+WattsOrderList.get(0)+" failed. Switching to the next WATTS ORDER.");
-								Thread.sleep(2000);
+								Thread.sleep(4000);
 								driver.findElement(By.xpath("//div[@id='modaldialog_hd']//button[@id='container_close']")).click();
-								Thread.sleep(2000);
-								driver.findElement(By.xpath("//a[@name='ActionAreaHeader_pyWorkPage_6']")).click();
-								System.out.println();
+								Thread.sleep(4000);
+								WebElement element1 = driver.findElement(By.xpath("//a[@name='ActionAreaHeader_pyWorkPage_6']"));
+								actions.moveToElement(element1).click().build().perform();
+								//driver.findElement(By.xpath("//a[@name='ActionAreaHeader_pyWorkPage_6']")).click();
+								System.out.println("CATCH BLOCK FINISHED!");
 							}
 						}
 						else
@@ -194,7 +197,9 @@ public class cmacload {
 						}
 						
 						WattsOrderList.clear();
-						break aa;
+						System.out.println("WATTSORDERLIST AFTER FLUSHING IS: "+WattsOrderList);
+						System.out.println("WATTSORDERLIST SIZE: "+WattsOrderList.size());
+						break;
 					}//end of else of j loop
 			}// end if i loop
 		
