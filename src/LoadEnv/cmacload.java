@@ -130,7 +130,7 @@ public class cmacload {
 								}
 							}
 							
-							System.out.println("##########Issuing Material for PartNo "+WattsOrderList+" ##########");
+							System.out.println("########## Issuing Material for PartNo "+WattsOrderList+" ##########");
 							
 							Thread.sleep(5000);
 							
@@ -202,8 +202,6 @@ public class cmacload {
 						break;
 					}//end of else of j loop
 			}// end if i loop
-		
-		
 		
 		wb.close();	   
 	}//end of IssueOrder
