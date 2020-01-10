@@ -101,105 +101,9 @@ public class cmacload {
 					}
 					else
 					{
-						System.out.println("Current Value of i: "+i+" & Value of j: "+j);
-						System.out.println("WattsOrderList: ");
-						System.out.println(WattsOrderList);
-						
-						String WattsOrder = WattsOrderList.get(0);
-						System.out.println("SEARCHING WATTS Order :" + WattsOrder);
-						Thread.sleep(3000);
-						if(SearchWattsOrder(WattsOrder))
-						{
-							System.out.println("WATTS Order: " + WattsOrder +" FOUND!");
-							driver.findElement(By.xpath("//span[contains(text(),'"+WattsOrder+"')]")).click();
-							System.out.println("WATTS ORDER CLICKED SUCCESSFULLY");
-							
-							for (int k = 1; k < WattsOrderList.size(); k++) 
-							{
-								String PartNo = WattsOrderList.get(k);
-								System.out.println("SEARCHING PART No. :" + PartNo);
-								if(SearchPartNo(PartNo))
-								{
-									System.out.println("Part No: " + PartNo +" FOUND!");
-								}
-								else
-								{
-									WattsOrderList.remove(PartNo);
-								 	System.out.println("PART NO. "+PartNo+" for Watts Order"+WattsOrder+" Not FOUND!");
-								 	System.out.println("PART NO. "+PartNo+" Removed!");
-								}
-							}
-							
-							System.out.println("########## Issuing Material for PartNo "+WattsOrderList+" ##########");
-							
-							Thread.sleep(5000);
-							
-							WebElement element = driver.findElement(By.xpath("//button[contains(text(),'Issue Materials') and @class='Primary pzhc pzbutton']"));
-							Actions actions = new Actions(driver);
-							actions.moveToElement(element).click().build().perform();
-							System.out.println("Clicked on Issue materials.");
-							Thread.sleep(5000);
-					    	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[@id='$PpyWorkPage$pBoMDetails$l1']//td[3]//span"))); //waiting for the first PartNo to load up on the page after clicking on Issue MAterials
-							System.out.println("FOUND the first PartNo to load up on the page after clicking on Issue Materials");
-							
-							for (int k = 1; k < WattsOrderList.size(); k++)
-							{
-								int i1=1;
-								while(true)
-								{
-									if(driver.findElements(By.xpath("//tr[@id='$PpyWorkPage$pBoMDetails$l"+i1+"']//td[3]//span")).size() != 0) //only if a Part No. is displayed @ ith position then only compare the text
-										if(driver.findElement(By.xpath("//tr[@id='$PpyWorkPage$pBoMDetails$l"+i1+"']//td[3]//span")).getText().equals(WattsOrderList.get(k)))
-										{
-											System.out.println("FOUND the location of PART NO. "+WattsOrderList.get(k)+" at "+i1);
-											break;
-										}
-										else
-										{
-											System.out.println("Trying to find "+i1);
-											i1++;
-										}			
-								}
-								
-								Thread.sleep(3000);
-								wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='IssuedQuantity"+i1+"']")));
-								driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).clear();
-								driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).sendKeys("1"); // or use this xpath //tr[@id='$PpyWorkPage$pBoMDetails$l"+i+"']//td[12]//input
-								Thread.sleep(3000);
-								/*wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='fadeOut']")));
-								assertEquals(driver.findElement(By.xpath("//input[@id='fadeOut']")), "The issue transaction was successful");*/
-							}
-							
-							try{
-								wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@name='ModalButtonActionArea_pyWorkPage_19']")));
-								driver.findElement(By.xpath("//button[@name='ModalButtonActionArea_pyWorkPage_19']")).click();
-								
-								Thread.sleep(5000);
-								WebElement element1 = driver.findElement(By.xpath("//button[@name='ModalButtonActionArea_pyWorkPage_22']"));
-								actions.moveToElement(element1).click().build().perform();
-								System.out.println("Material Issued Successfully for Watts Order: "+WattsOrder);
-								Thread.sleep(12000);
-							}
-							catch (JavascriptException e) 
-							{
-								System.out.println("EXCEPTION OCCURED! ISSUING of Watts Order "+WattsOrderList.get(0)+" failed. Switching to the next WATTS ORDER.");
-								Thread.sleep(4000);
-								driver.findElement(By.xpath("//div[@id='modaldialog_hd']//button[@id='container_close']")).click();
-								Thread.sleep(4000);
-								WebElement element1 = driver.findElement(By.xpath("//a[@name='ActionAreaHeader_pyWorkPage_6']"));
-								actions.moveToElement(element1).click().build().perform();
-								//driver.findElement(By.xpath("//a[@name='ActionAreaHeader_pyWorkPage_6']")).click();
-								System.out.println("CATCH BLOCK FINISHED!");
-							}
-						}
-						else
-						{
-							System.out.println("WattsOrder "+WattsOrder + " Not FOUND!");
-						}
-						
-						WattsOrderList.clear();
-						System.out.println("WATTSORDERLIST AFTER FLUSHING IS: "+WattsOrderList);
-						System.out.println("WATTSORDERLIST SIZE: "+WattsOrderList.size());
+						IssueWatts(WattsOrderList, i, j);
 						break;
+						
 					}//end of else of j loop
 			}// end if i loop
 		
@@ -330,4 +234,111 @@ public class cmacload {
 		return false;
 	} // end of SearchPartNo Function
 
+	public void IssueWatts(List<String> WattsOrderList, int i, int j) throws InterruptedException
+	{
+		WattsOrderList.removeIf(item -> item == null || "".equals(item));
+		
+		System.out.println("Current Value of i: "+i+" & Value of j: "+j);
+		System.out.println("WattsOrderList: ");
+		System.out.println(WattsOrderList);
+		
+		String WattsOrder = WattsOrderList.get(0);
+		System.out.println("SEARCHING WATTS Order :" + WattsOrder);
+		Thread.sleep(3000);
+		if(SearchWattsOrder(WattsOrder))
+		{
+			System.out.println("WATTS Order: " + WattsOrder +" FOUND!");
+			driver.findElement(By.xpath("//span[contains(text(),'"+WattsOrder+"')]")).click();
+			System.out.println("WATTS ORDER CLICKED SUCCESSFULLY");
+			
+			for (int k = 1; k < WattsOrderList.size(); k++) 
+			{
+				String PartNo = WattsOrderList.get(k);
+				System.out.println("SEARCHING PART No. :" + PartNo);
+				if(SearchPartNo(PartNo))
+				{
+					System.out.println("Part No: " + PartNo +" FOUND!");
+				}
+				else
+				{
+					WattsOrderList.remove(PartNo);
+				 	System.out.println("PART NO. "+PartNo+" for Watts Order"+WattsOrder+" Not FOUND!");
+				 	System.out.println("PART NO. "+PartNo+" Removed!");
+				}
+			}
+			
+			System.out.println("########## Issuing Material for PartNo "+WattsOrderList+" ##########");
+			
+			Thread.sleep(5000);
+			
+			WebElement element = driver.findElement(By.xpath("//button[contains(text(),'Issue Materials') and @class='Primary pzhc pzbutton']"));
+			Actions actions = new Actions(driver);
+			actions.moveToElement(element).click().build().perform();
+			System.out.println("Clicked on Issue materials.");
+			Thread.sleep(5000);
+	    //	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[@id='$PpyWorkPage$pBoMDetails$l1']//td[3]//span"))); //waiting for the first PartNo to load up on the page after clicking on Issue MAterials
+		//	System.out.println("FOUND the first PartNo to load up on the page after clicking on Issue Materials");
+			
+			for (int k = 1; k < WattsOrderList.size(); k++)
+			{
+				int i1=1;
+				while(true)
+				{
+					if(driver.findElements(By.xpath("//tr[@id='$PpyWorkPage$pBoMDetails$l"+i1+"']//td[3]//span")).size() != 0) //only if a Part No. is displayed @ ith position then only compare the text
+						if(driver.findElement(By.xpath("//tr[@id='$PpyWorkPage$pBoMDetails$l"+i1+"']//td[3]//span")).getText().equals(WattsOrderList.get(k)))
+						{
+							System.out.println("FOUND the location of PART NO. "+WattsOrderList.get(k)+" at "+i1);
+							break;
+						}
+						else
+						{
+							//System.out.println("Trying to find "+i1);
+							i1++;
+						}			
+				}
+				
+				Thread.sleep(3000);
+				//System.out.println("Value of i for reference : "+i1);
+				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='IssuedQuantity"+i1+"']")));
+				driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).clear();
+				driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).sendKeys("1"); // or use this xpath //tr[@id='$PpyWorkPage$pBoMDetails$l"+i+"']//td[12]//input
+				Thread.sleep(3000);
+				/*wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='fadeOut']")));
+				assertEquals(driver.findElement(By.xpath("//input[@id='fadeOut']")), "The issue transaction was successful");*/
+			}
+			
+			try{
+				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@name='ModalButtonActionArea_pyWorkPage_19']")));
+				driver.findElement(By.xpath("//button[@name='ModalButtonActionArea_pyWorkPage_19']")).click();
+				
+				Thread.sleep(5000);
+				WebElement element1 = driver.findElement(By.xpath("//button[@name='ModalButtonActionArea_pyWorkPage_22']"));
+				actions.moveToElement(element1).click().build().perform();
+				System.out.println("Material Issued Successfully for Watts Order: "+WattsOrder);
+				Thread.sleep(12000);
+			}
+			catch (JavascriptException e) 
+			{
+				System.out.println("EXCEPTION OCCURED! ISSUING of Watts Order "+WattsOrderList.get(0)+" failed. Switching to the next WATTS ORDER.");
+				driver.findElement(By.xpath("//div[@id='modaldialog_hd']//button[@id='container_close']")).click();
+				Thread.sleep(4000);
+				WebElement element1 = driver.findElement(By.xpath("//a[@name='ActionAreaHeader_pyWorkPage_6']"));
+				actions.moveToElement(element1).click().build().perform();
+				//driver.findElement(By.xpath("//a[@name='ActionAreaHeader_pyWorkPage_6']")).click();
+				Thread.sleep(6000);
+				System.out.println("CATCH BLOCK FINISHED!");
+				System.out.println();
+			}
+		}
+		else
+		{
+			System.out.println("WattsOrder "+WattsOrder + " Not FOUND!");
+			System.out.println();
+		}
+		
+		WattsOrderList.clear();
+		System.out.println("WATTSORDERLIST AFTER FLUSHING IS: "+WattsOrderList);
+		System.out.println("WATTSORDERLIST SIZE: "+WattsOrderList.size());
+
+	}
 }
