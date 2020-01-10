@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import static org.testng.Assert.assertEquals;
 import java.io.File;
@@ -296,12 +297,15 @@ public class cmacload {
 							i1++;
 						}			
 				}
-				
+				int max=5;
+				int min=1;
+				Random rand = new Random();
+				int n = rand.nextInt((max - min) + 1) + min;
 				Thread.sleep(3000);
 				//System.out.println("Value of i for reference : "+i1);
 				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='IssuedQuantity"+i1+"']")));
 				driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).clear();
-				driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).sendKeys("1"); // or use this xpath //tr[@id='$PpyWorkPage$pBoMDetails$l"+i+"']//td[12]//input
+				driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).sendKeys(Integer.toString(n)); // or use this xpath //tr[@id='$PpyWorkPage$pBoMDetails$l"+i+"']//td[12]//input
 				Thread.sleep(3000);
 				/*wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='fadeOut']")));
 				assertEquals(driver.findElement(By.xpath("//input[@id='fadeOut']")), "The issue transaction was successful");*/
