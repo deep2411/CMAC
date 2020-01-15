@@ -305,7 +305,10 @@ public class cmacload {
 				//System.out.println("Value of i for reference : "+i1);
 				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='IssuedQuantity"+i1+"']")));
 				driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).clear();
-				driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']")).sendKeys(Integer.toString(n)); // or use this xpath //tr[@id='$PpyWorkPage$pBoMDetails$l"+i+"']//td[12]//input
+				
+				WebElement IssueQuantity = driver.findElement(By.xpath("//input[@id='IssuedQuantity"+i1+"']"));  // or use this xpath //tr[@id='$PpyWorkPage$pBoMDetails$l"+i+"']//td[12]//input
+				Actions performAct = new Actions(driver);
+				performAct.sendKeys(IssueQuantity, "Integer.toString("+n+")").build().perform();
 				Thread.sleep(3000);
 				/*wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='fadeOut']")));
 				assertEquals(driver.findElement(By.xpath("//input[@id='fadeOut']")), "The issue transaction was successful");*/
