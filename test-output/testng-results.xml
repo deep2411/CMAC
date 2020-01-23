@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="377012" started-at="2020-01-15T13:18:06Z" finished-at="2020-01-15T13:24:23Z">
+  <suite name="Default suite" duration-ms="371766" started-at="2020-01-21T10:31:56Z" finished-at="2020-01-21T10:38:08Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="377012" started-at="2020-01-15T13:18:06Z" finished-at="2020-01-15T13:24:23Z">
+    <test name="Default test" duration-ms="371766" started-at="2020-01-21T10:31:56Z" finished-at="2020-01-21T10:38:08Z">
       <class name="LoadEnv.cmacload">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:LoadEnv.cmacload@18be83e4]" name="setUp" is-config="true" duration-ms="35152" started-at="2020-01-15T18:48:06Z" finished-at="2020-01-15T18:48:42Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:LoadEnv.cmacload@18be83e4]" name="setUp" is-config="true" duration-ms="31292" started-at="2020-01-21T16:01:56Z" finished-at="2020-01-21T16:02:28Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="IssueOrder()[pri:0, instance:LoadEnv.cmacload@18be83e4]" name="IssueOrder" duration-ms="340232" started-at="2020-01-15T18:48:42Z" finished-at="2020-01-15T18:54:22Z">
+        <test-method status="PASS" signature="UnIssueOrder()[pri:0, instance:LoadEnv.cmacload@18be83e4]" name="UnIssueOrder" duration-ms="335393" started-at="2020-01-21T16:02:28Z" finished-at="2020-01-21T16:08:03Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- IssueOrder -->
-        <test-method status="PASS" signature="AC()[pri:0, instance:LoadEnv.cmacload@18be83e4]" name="AC" is-config="true" duration-ms="1605" started-at="2020-01-15T18:54:22Z" finished-at="2020-01-15T18:54:23Z">
+        </test-method> <!-- UnIssueOrder -->
+        <test-method status="PASS" signature="AC()[pri:0, instance:LoadEnv.cmacload@18be83e4]" name="AC" is-config="true" duration-ms="5072" started-at="2020-01-21T16:08:03Z" finished-at="2020-01-21T16:08:08Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- AC -->

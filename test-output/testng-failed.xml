@@ -6,7 +6,7 @@
       <class name="LoadEnv.cmacload">
         <methods>
           <include name="AC"/>
-          <include name="IssueOrder"/>
+          <include name="UnIssueOrder"/>
           <include name="setUp"/>
         </methods>
       </class> <!-- LoadEnv.cmacload -->
