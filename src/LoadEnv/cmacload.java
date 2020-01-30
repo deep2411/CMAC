@@ -24,6 +24,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -110,7 +111,7 @@ public class cmacload {
 		wb.close();	   
 	}//end of IssueOrder
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void UnIssueOrder() throws Exception {
 
 		driver.get(baseUrl);
@@ -149,6 +150,48 @@ public class cmacload {
 		wb.close();	   
 	}//end of UnIssueOrder
 	
+	@Test(enabled=true)
+	public void OrderReel() throws Exception{
+	
+		driver.get(baseUrl);
+		
+		driver.findElement(By.xpath("//span[contains(text(),'Reel Management')]")).click();
+		
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("PartNumber1")));
+		Select dropDown = new Select(driver.findElement(By.id("PartNumber1")));
+		dropDown.selectByIndex(2);
+		
+		Thread.sleep(3000);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='Footage1']")));
+		driver.findElement(By.xpath("//input[@id='Footage1']")).sendKeys("3");
+		
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//button[contains(@name,'ReelMgmtButtonSection_D_SaveReelDetailsList_3')]")).click();
+		
+		Thread.sleep(3000);
+		dropDown = new Select(driver.findElement(By.id("PartNumber2")));
+		dropDown.selectByIndex(3);
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='Footage2']")));
+		driver.findElement(By.xpath("//input[@id='Footage2']")).sendKeys("4");
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("//button[contains(@name,'ReelMgmtButtonSection_D_SaveReelDetailsList_4')]")).click();
+		Thread.sleep(5000);
+		
+		driver.findElement(By.xpath("//span[contains(text(),'My Work')]")).click();
+		Thread.sleep(6000);
+		driver.findElement(By.xpath("//span[contains(text(),'Reel Management')]")).click();
+		
+		Thread.sleep(5000);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='Footage2']")));
+		if(driver.findElement(By.xpath("//input[@id='Footage1']")).getText()!=null && driver.findElement(By.xpath("//input[@id='Footage2']")).getText()!=null)
+			{
+				driver.findElement(By.xpath("//button[contains(@name,'ReelMgmtButtonSection_D_SaveReelDetailsList_8')]")).click();
+				Thread.sleep(4000);
+			}
+		
+	}
+ 	
 	@AfterClass(alwaysRun = true)
 	
 	public void AC() throws Exception 
